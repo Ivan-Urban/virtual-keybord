@@ -1,0 +1,10 @@
+.title {
+    display: block;
+    width: 540px;
+    height: 50px;
+    margin: 0 auto;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: 700;
+    font-size: 40px;
+    color: #88c2e3;
+}
