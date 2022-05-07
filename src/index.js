@@ -17,14 +17,14 @@ const lengs = {
     'Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\', 'Del',
     'CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'", 'Enter',
     'Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', '&#9650;', 'Shift',
-    'Ctrl', 'Win', 'Alt', '', 'Alt', '&#9668;', '&#9660;', '&#9658;', 'Ctrl',
+    'Ctrl', 'Win', 'Alt', '&#8194;', 'Alt', '&#9668;', '&#9660;', '&#9658;', 'Ctrl',
   ],
   ru: [
     'ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace',
     'Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', '\\', 'Del',
     'CapsLock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э', 'Enter',
     'Shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '.', '&#9650;', 'Shift',
-    'Ctrl', 'Win', 'Alt', '', 'Alt', '&#9668;', '&#9660', '&#9658;', 'Ctrl',
+    'Ctrl', 'Win', 'Alt', '&#8194;', 'Alt', '&#9668;', '&#9660', '&#9658;', 'Ctrl',
   ],
 };
 
@@ -38,14 +38,14 @@ class Key {
     this.key.classList.add('key');
     if (leng === 'en') {
       this.key.innerHTML = lengs.en[n];
-      if (lengs.en[n] === '') {
+      if (lengs.en[n] === '&#8194;') {
         this.key.classList.add('keySpace');
       } else {
         this.key.classList.add(`key${[lengs.en[n]]}`);
       }
     } else {
       this.key.innerHTML = [lengs.ru[n]];
-      if (lengs.en[n] === '') {
+      if (lengs.en[n] === '&#8194;') {
         this.key.classList.add('keySpace');
       } else {
         this.key.classList.add(`key${[lengs.en[n]]}`);
@@ -59,6 +59,7 @@ class Key {
     };
     this.key.onmouseup = () => {
       this.onMouseUp();
+      input.focus();
     };
   }
 
@@ -68,6 +69,9 @@ class Key {
 
   onMouseDown() {
     this.key.classList.add('active');
+    if (!functionalKeys.includes(this.key.classList[1])) {
+      input.value += this.key.innerHTML;
+    }
   }
 
   onMouseUp() {
@@ -120,11 +124,3 @@ for (let i = 0; i < 5; i += 1) {
       break;
   }
 }
-
-// arrOfKeys[1].key.addEventListener('mousedown', () => {
-//   arrOfKeys[1].key.classList.add('active');
-// });
-
-// arrOfKeys[1].key.addEventListener('mouseup', () => {
-//   arrOfKeys[1].key.classList.remove('active');
-// });
