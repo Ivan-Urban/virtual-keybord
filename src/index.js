@@ -28,6 +28,17 @@ const lengs = {
   ],
 };
 
+const letters = [
+  'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p',
+  'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l',
+  'z', 'x', 'c', 'v', 'b', 'n', 'm',
+  'ё', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ',
+  'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э',
+  'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю',
+];
+
+let checkLettersSize = 'small';
+
 const functionalKeys = ['keyBackspace', 'keyTab', 'keyDel', 'keyCapsLock', 'keyEnter', 'keyShift', 'key&#9650;', 'keyCtrl', 'keyAlt', 'keyWin', 'key&#9668;', 'key&#9660;', 'key&#9658;'];
 
 const leng = 'en';
@@ -54,28 +65,87 @@ class Key {
     if (functionalKeys.includes(this.key.classList[1])) {
       this.key.classList.add('functionalKey');
     }
-    this.key.onmousedown = () => {
-      this.onMouseDown();
-    };
-    this.key.onmouseup = () => {
-      this.onMouseUp();
-      input.focus();
-    };
+    // this.key.onmousedown = () => {
+    //   this.onMouseDown();
+    // };
+    // this.key.onmouseup = () => {
+    //   this.onMouseUp();
+    // };
   }
 
   appendKey(htmlElement) {
     htmlElement.append(this.key);
   }
 
+  upper() {
+    this.key.innerHTML = this.key.innerHTML.toUpperCase();
+  }
+
+  lower() {
+    this.key.innerHTML = this.key.innerHTML.toLowerCase();
+  }
+
   onMouseDown() {
     this.key.classList.add('active');
+    let textCorsorPosition = input.selectionStart;
+    const spaceText = '      ';
+    const lineBreak = '\n';
     if (!functionalKeys.includes(this.key.classList[1])) {
-      input.value += this.key.innerHTML;
+      textCorsorPosition = input.selectionStart;
+      input.value = input.value.slice(0, input.selectionStart) + this.key.innerHTML
+      + input.value.slice(input.selectionStart, input.value.length);
+      input.setSelectionRange(textCorsorPosition + 1, textCorsorPosition + 1);
+    } else {
+      switch (this.key.classList[1]) {
+        case 'keyBackspace':
+          textCorsorPosition = input.selectionStart;
+          if (textCorsorPosition !== 0) {
+            input.value = input.value.slice(0, input.selectionStart - 1)
+          + input.value.slice(input.selectionStart, input.value.length);
+            input.setSelectionRange(textCorsorPosition - 1, textCorsorPosition - 1);
+          }
+          break;
+        case 'keyTab':
+          textCorsorPosition = input.selectionStart;
+          input.value = input.value.slice(0, input.selectionStart) + spaceText
+          + input.value.slice(input.selectionStart, input.value.length);
+          input.setSelectionRange(textCorsorPosition + 6, textCorsorPosition + 6);
+          break;
+        case 'keyDel':
+          textCorsorPosition = input.selectionStart;
+          input.value = input.value.slice(0, input.selectionStart)
+          + input.value.slice(input.selectionStart + 1, input.value.length);
+          input.setSelectionRange(textCorsorPosition, textCorsorPosition);
+          break;
+        case 'keyEnter':
+          textCorsorPosition = input.selectionStart;
+          input.value = input.value.slice(0, input.selectionStart) + lineBreak
+          + input.value.slice(input.selectionStart, input.value.length);
+          input.setSelectionRange(textCorsorPosition + 1, textCorsorPosition + 1);
+          break;
+        case 'key&#9650;':
+          input.setSelectionRange(0, 0);
+          break;
+        case 'key&#9668;':
+          if (input.selectionStart !== 0) {
+            input.setSelectionRange(input.selectionStart - 1, input.selectionStart - 1);
+          }
+          break;
+        case 'key&#9660;':
+          input.setSelectionRange(input.value.length, input.value.length);
+          break;
+        case 'key&#9658;':
+          input.setSelectionRange(input.selectionStart + 1, input.selectionStart + 1);
+          break;
+        default:
+          break;
+      }
     }
   }
 
   onMouseUp() {
     this.key.classList.remove('active');
+    input.focus();
   }
 }
 
@@ -124,3 +194,53 @@ for (let i = 0; i < 5; i += 1) {
       break;
   }
 }
+
+function changeLettersSize() {
+  arrOfKeys.forEach((el) => {
+    if (letters.includes(el.key.innerHTML.toLowerCase())) {
+      if (checkLettersSize === 'small') {
+        el.upper();
+      } else {
+        el.lower();
+      }
+    }
+  });
+  if (checkLettersSize === 'small') {
+    checkLettersSize = 'big';
+  } else {
+    checkLettersSize = 'small';
+  }
+}
+
+document.querySelector('.keyCapsLock').onmousedown = () => {
+  document.querySelector('.keyCapsLock').classList.add('active');
+  changeLettersSize();
+};
+
+keybordCase.onmousedown = (event) => {
+  arrOfKeys.forEach((el) => {
+    if (el.key === event.target) {
+      el.onMouseDown();
+    }
+  });
+};
+
+keybordCase.onmouseup = () => {
+  arrOfKeys.forEach((el) => {
+    el.onMouseUp();
+  });
+};
+
+const shifts = document.querySelectorAll('.keyShift');
+
+shifts.forEach((el) => {
+  el.addEventListener('mousedown', () => {
+    changeLettersSize();
+  });
+});
+
+shifts.forEach((el) => {
+  el.addEventListener('mouseup', () => {
+    changeLettersSize();
+  });
+});
