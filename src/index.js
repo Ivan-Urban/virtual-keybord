@@ -54,10 +54,24 @@ class Key {
     if (functionalKeys.includes(this.key.classList[1])) {
       this.key.classList.add('functionalKey');
     }
+    this.key.onmousedown = () => {
+      this.onMouseDown();
+    };
+    this.key.onmouseup = () => {
+      this.onMouseUp();
+    };
   }
 
   appendKey(htmlElement) {
     htmlElement.append(this.key);
+  }
+
+  onMouseDown() {
+    this.key.classList.add('active');
+  }
+
+  onMouseUp() {
+    this.key.classList.remove('active');
   }
 }
 
@@ -106,3 +120,11 @@ for (let i = 0; i < 5; i += 1) {
       break;
   }
 }
+
+// arrOfKeys[1].key.addEventListener('mousedown', () => {
+//   arrOfKeys[1].key.classList.add('active');
+// });
+
+// arrOfKeys[1].key.addEventListener('mouseup', () => {
+//   arrOfKeys[1].key.classList.remove('active');
+// });

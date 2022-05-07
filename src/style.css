@@ -34,6 +34,7 @@
   display: flex;
   width: 100%;
   justify-content: space-between;
+  align-items: center
 }
 
 .key {
@@ -45,18 +46,44 @@
   justify-content: center;
   align-items: center;
   font-size: 17px;
+  border-radius: 3px;
+  transition: ease-in-out 0.1s;
+}
+
+.key:hover {
+  /* background-color: #5f1d69; */
+  background-color: #bb82c4;
+}
+
+.key.active {
+  width: 35px;
+  height: 35px;
+  margin: 0 2.5px 0;
+  background-color: #5f1d69;
 }
 
 .keyBackspace, .keyCapsLock {
   width: 100px;
 }
 
+.keyBackspace.active, .keyCapsLock.active {
+  width: 95px;
+}
+
 .keyEnter, .keyShift {
   width: 86px;
 }
 
+.keyEnter.active, .keyShift.active {
+  width: 81px;
+}
+
 .keySpace {
   width: 330px;
+}
+
+.keySpace.active {
+  width: 325px;
 }
 
 .functionalKey {
