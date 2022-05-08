@@ -13,7 +13,7 @@ spanLang.classList.add('span');
 info.append(spanLang);
 
 const spanOC = document.createElement('span');
-spanOC.textContent = 'Made for Window';
+spanOC.textContent = 'Made for Windows';
 spanOC.classList.add('span');
 info.append(spanOC);
 
