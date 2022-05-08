@@ -1,7 +1,21 @@
 const title = document.createElement('span');
-title.textContent = 'Виртуальная клавиатура';
+title.textContent = 'Virtual Keyboard';
 title.classList.add('title');
 document.body.append(title);
+
+const info = document.createElement('div');
+info.classList.add('info');
+document.body.append(info);
+
+const spanLang = document.createElement('span');
+spanLang.textContent = 'Change language: Ctrl + Alt';
+spanLang.classList.add('span');
+info.append(spanLang);
+
+const spanOC = document.createElement('span');
+spanOC.textContent = 'Made for Window';
+spanOC.classList.add('span');
+info.append(spanOC);
 
 const input = document.createElement('textarea');
 input.classList.add('textarea');

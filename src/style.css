@@ -1,12 +1,26 @@
 .title {
   display: block;
-  width: 472px;
+  width: 312px;
   height: 40px;
-  margin: 0 auto 50px;
+  margin: 0 auto 20px;
   font-family: Georgia, 'Times New Roman', Times, serif;
   font-weight: 700;
   font-size: 35px;
   color: #88c2e3;
+}
+
+.info {
+  display: flex;
+  width: 700px;
+  height: 30px;
+  margin: 0 auto;
+  justify-content: space-between;
+}
+
+.span {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-weight: 500;
+  font-size: 25px;
 }
 
 .textarea {
