@@ -1,0 +1,110 @@
+.title {
+  display: block;
+  width: 312px;
+  height: 40px;
+  margin: 0 auto 20px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-weight: 700;
+  font-size: 35px;
+  color: #88c2e3;
+}
+
+.info {
+  display: flex;
+  width: 700px;
+  height: 30px;
+  margin: 0 auto;
+  justify-content: space-between;
+}
+
+.span {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-weight: 500;
+  font-size: 25px;
+}
+
+.textarea {
+  display: block;
+  width: 700px;
+  height: 250px;
+  margin: 0 auto 10px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 20px;
+  outline: none;
+  border: 2px solid #010B13;
+  border-radius: 10px
+}
+
+.keybord-case {
+  display: flex;
+  flex-direction: column;
+  /* flex-wrap: wrap; */
+  width: 700px;
+  padding: 7px;
+  margin: 0 auto;
+  gap: 5px 4px;
+  background-color: #010B13;
+  border: 2px solid #f5f5dc;
+  border-radius: 5px;
+  user-select: none;
+}
+
+.row {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center
+}
+
+.key {
+  display: flex;
+  width: 40px;
+  height: 40px;
+  background-color: #787873;
+  color: aliceblue;
+  justify-content: center;
+  align-items: center;
+  font-size: 17px;
+  border-radius: 3px;
+  transition: ease-in-out 0.1s;
+}
+
+.key:hover {
+  /* background-color: #5f1d69; */
+  background-color: #bb82c4;
+}
+
+.key.active {
+  width: 35px;
+  height: 35px;
+  margin: 0 2.5px 0;
+  background-color: #5f1d69;
+}
+
+.keyBackspace, .keyCapsLock {
+  width: 100px;
+}
+
+.keyBackspace.active, .keyCapsLock.active {
+  width: 95px;
+}
+
+.keyEnter, .keyShift {
+  width: 86px;
+}
+
+.keyEnter.active, .keyShift.active {
+  width: 81px;
+}
+
+.keySpace {
+  width: 330px;
+}
+
+.keySpace.active {
+  width: 325px;
+}
+
+.functionalKey {
+  background: #353536;
+}

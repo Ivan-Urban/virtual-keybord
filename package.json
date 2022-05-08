@@ -1,0 +1,26 @@
+{
+  "name": "virtual-keybord",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint ./src",
+    "lint:fix": "eslint ./src --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ivan-Urban/virtual-keybord.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ivan-Urban/virtual-keybord/issues"
+  },
+  "homepage": "https://github.com/Ivan-Urban/virtual-keybord#readme",
+  "devDependencies": {
+    "eslint": "^8.14.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0"
+  }
+}
