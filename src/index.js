@@ -41,36 +41,30 @@ let checkLettersSize = 'small';
 
 const functionalKeys = ['keyBackspace', 'keyTab', 'keyDel', 'keyCapsLock', 'keyEnter', 'keyShift', 'key&#9650;', 'keyCtrl', 'keyAlt', 'keyWin', 'key&#9668;', 'key&#9660;', 'key&#9658;'];
 
+const keysId = [
+  'Backquote', 'Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6', 'Digit7', 'Digit8', 'Digit9', 'Digit0', 'Minus', 'Equal', 'Backspace',
+  'Tab', 'KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY', 'KeyU', 'KeyI', 'KeyO', 'KeyP', 'BracketLeft', 'BracketRight', 'Backslash', 'Delete',
+  'CapsLock', 'KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK', 'KeyL', 'Semicolon', 'Quote', 'Enter',
+  'ShiftLeft', 'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB', 'KeyN', 'KeyM', 'Comma', 'Period', 'Slash', 'ArrowUp', 'ShiftRight',
+  'ControlLeft', 'MetaLeft', 'AltLeft', 'Space', 'AltRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight', 'ControlRight',
+];
+
 let leng = 'en';
 
 class Key {
   constructor(n) {
     this.key = document.createElement('div');
     this.key.classList.add('key');
-    // if (leng === 'en') {
     this.key.innerHTML = lengs[leng][n];
     if (lengs.en[n] === '&#8194;') {
       this.key.classList.add('keySpace');
     } else {
       this.key.classList.add(`key${[lengs.en[n]]}`);
     }
-    // } else {
-    //   this.key.innerHTML = lengs.ru[n];
-    //   if (lengs.en[n] === '&#8194;') {
-    //     this.key.classList.add('keySpace');
-    //   } else {
-    //     this.key.classList.add(`key${[lengs.en[n]]}`);
-    //   }
-    // }
+    this.key.id = keysId[n];
     if (functionalKeys.includes(this.key.classList[1])) {
       this.key.classList.add('functionalKey');
     }
-    // this.key.onmousedown = () => {
-    //   this.onMouseDown();
-    // };
-    // this.key.onmouseup = () => {
-    //   this.onMouseUp();
-    // };
   }
 
   appendKey(htmlElement) {
@@ -212,10 +206,13 @@ function changeLettersSize() {
   }
 }
 
-document.querySelector('.keyCapsLock').onmousedown = () => {
-  document.querySelector('.keyCapsLock').classList.add('active');
+const capsLock = document.querySelector('.keyCapsLock');
+
+function capsDown() {
   changeLettersSize();
-};
+}
+
+capsLock.addEventListener('mousedown', capsDown);
 
 keybordCase.onmousedown = (event) => {
   arrOfKeys.forEach((el) => {
@@ -234,15 +231,11 @@ keybordCase.onmouseup = () => {
 const shifts = document.querySelectorAll('.keyShift');
 
 shifts.forEach((el) => {
-  el.addEventListener('mousedown', () => {
-    changeLettersSize();
-  });
+  el.addEventListener('mousedown', changeLettersSize);
 });
 
 shifts.forEach((el) => {
-  el.addEventListener('mouseup', () => {
-    changeLettersSize();
-  });
+  el.addEventListener('mouseup', changeLettersSize);
 });
 
 const ctrls = document.querySelectorAll('.keyCtrl');
@@ -255,20 +248,43 @@ function changeLanguage() {
   for (let i = 0; i < 64; i += 1) {
     arrOfKeys[i].key.innerHTML = lengs[leng][i];
   }
+  arrOfKeys.forEach((el) => {
+    if (letters.includes(el.key.innerHTML.toLowerCase())) {
+      if (checkLettersSize === 'small') {
+        el.lower();
+      } else {
+        el.upper();
+      }
+    }
+  });
+}
+
+function ctrlDown() {
+  ctrlCheck = true;
+  if (ctrlCheck && altCheck) {
+    if (leng === 'en') {
+      leng = 'ru';
+    } else {
+      leng = 'en';
+    }
+    changeLanguage();
+  }
+}
+
+function altDown() {
+  altCheck = true;
+  if (ctrlCheck && altCheck) {
+    if (leng === 'en') {
+      leng = 'ru';
+    } else {
+      leng = 'en';
+    }
+    changeLanguage();
+  }
 }
 
 ctrls.forEach((el) => {
-  el.addEventListener('mousedown', () => {
-    ctrlCheck = true;
-    if (ctrlCheck && altCheck) {
-      if (leng === 'en') {
-        leng = 'ru';
-      } else {
-        leng = 'en';
-      }
-      changeLanguage();
-    }
-  });
+  el.addEventListener('mousedown', ctrlDown);
 });
 
 ctrls.forEach((el) => {
@@ -278,17 +294,7 @@ ctrls.forEach((el) => {
 });
 
 alts.forEach((el) => {
-  el.addEventListener('mousedown', () => {
-    altCheck = true;
-    if (ctrlCheck && altCheck) {
-      if (leng === 'en') {
-        leng = 'ru';
-      } else {
-        leng = 'en';
-      }
-      changeLanguage();
-    }
-  });
+  el.addEventListener('mousedown', altDown);
 });
 
 alts.forEach((el) => {
@@ -296,3 +302,47 @@ alts.forEach((el) => {
     altCheck = false;
   });
 });
+
+let shiftCount = 0;
+
+document.body.onkeydown = (event) => {
+  arrOfKeys.forEach((el) => {
+    if (el.key.id === event.code) {
+      el.onMouseDown();
+    }
+  });
+  if (event.code === 'CapsLock') {
+    capsDown();
+  }
+  if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
+    shiftCount += 1;
+    if (shiftCount === 1) {
+      changeLettersSize();
+    }
+  }
+  if (event.code === 'ControlLeft' || event.code === 'ControlRight') {
+    ctrlDown();
+  }
+  if (event.code === 'AltLeft' || event.code === 'AltRight') {
+    altDown();
+  }
+  event.preventDefault();
+};
+
+document.body.onkeyup = (event) => {
+  shiftCount = 0;
+  arrOfKeys.forEach((el) => {
+    if (el.key.id === event.code) {
+      el.onMouseUp();
+    }
+  });
+  if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
+    changeLettersSize();
+  }
+  if (event.code === 'ControlLeft' || event.code === 'ControlRight') {
+    ctrlCheck = false;
+  }
+  if (event.code === 'AltLeft' || event.code === 'AltRight') {
+    altCheck = false;
+  }
+};
