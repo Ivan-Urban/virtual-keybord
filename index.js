@@ -372,5 +372,3 @@ function getLocalStorage() {
 }
 
 window.addEventListener('load', getLocalStorage);
-
-// Для того, чтобы перепушить файл без автозамены гитом LF на CRLF:)))
