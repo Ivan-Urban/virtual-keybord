@@ -41,27 +41,27 @@ let checkLettersSize = 'small';
 
 const functionalKeys = ['keyBackspace', 'keyTab', 'keyDel', 'keyCapsLock', 'keyEnter', 'keyShift', 'key&#9650;', 'keyCtrl', 'keyAlt', 'keyWin', 'key&#9668;', 'key&#9660;', 'key&#9658;'];
 
-const leng = 'en';
+let leng = 'en';
 
 class Key {
   constructor(n) {
     this.key = document.createElement('div');
     this.key.classList.add('key');
-    if (leng === 'en') {
-      this.key.innerHTML = lengs.en[n];
-      if (lengs.en[n] === '&#8194;') {
-        this.key.classList.add('keySpace');
-      } else {
-        this.key.classList.add(`key${[lengs.en[n]]}`);
-      }
+    // if (leng === 'en') {
+    this.key.innerHTML = lengs[leng][n];
+    if (lengs.en[n] === '&#8194;') {
+      this.key.classList.add('keySpace');
     } else {
-      this.key.innerHTML = [lengs.ru[n]];
-      if (lengs.en[n] === '&#8194;') {
-        this.key.classList.add('keySpace');
-      } else {
-        this.key.classList.add(`key${[lengs.en[n]]}`);
-      }
+      this.key.classList.add(`key${[lengs.en[n]]}`);
     }
+    // } else {
+    //   this.key.innerHTML = lengs.ru[n];
+    //   if (lengs.en[n] === '&#8194;') {
+    //     this.key.classList.add('keySpace');
+    //   } else {
+    //     this.key.classList.add(`key${[lengs.en[n]]}`);
+    //   }
+    // }
     if (functionalKeys.includes(this.key.classList[1])) {
       this.key.classList.add('functionalKey');
     }
@@ -242,5 +242,57 @@ shifts.forEach((el) => {
 shifts.forEach((el) => {
   el.addEventListener('mouseup', () => {
     changeLettersSize();
+  });
+});
+
+const ctrls = document.querySelectorAll('.keyCtrl');
+const alts = document.querySelectorAll('.reyAlt');
+
+let ctrlCheck = false;
+let altCheck = false;
+
+function changeLanguage() {
+  for (let i = 0; i < 64; i += 1) {
+    arrOfKeys[i].key.innerHTML = lengs[leng][i];
+  }
+}
+
+ctrls.forEach((el) => {
+  el.addEventListener('mousedown', () => {
+    ctrlCheck = true;
+    if (ctrlCheck && altCheck) {
+      if (leng === 'en') {
+        leng = 'ru';
+      } else {
+        leng = 'en';
+      }
+      changeLanguage();
+    }
+  });
+});
+
+ctrls.forEach((el) => {
+  el.addEventListener('mouseup', () => {
+    ctrlCheck = false;
+  });
+});
+
+alts.forEach((el) => {
+  el.addEventListener('mousedown', () => {
+    altCheck = true;
+    if (ctrlCheck && altCheck) {
+      if (leng === 'en') {
+        leng = 'ru';
+      } else {
+        leng = 'en';
+      }
+      changeLanguage();
+    }
+  });
+});
+
+alts.forEach((el) => {
+  el.addEventListener('mouseup', () => {
+    altCheck = false;
   });
 });
