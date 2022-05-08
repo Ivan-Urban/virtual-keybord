@@ -262,6 +262,7 @@ function changeLanguage() {
   for (let i = 0; i < 64; i += 1) {
     arrOfKeys[i].key.innerHTML = lengs[leng][i];
   }
+  localStorage.setItem('leng', leng);
   arrOfKeys.forEach((el) => {
     if (letters.includes(el.key.innerHTML.toLowerCase())) {
       if (checkLettersSize === 'small') {
@@ -360,3 +361,14 @@ document.body.onkeyup = (event) => {
     altCheck = false;
   }
 };
+
+function getLocalStorage() {
+  if (localStorage.getItem('leng')) {
+    leng = localStorage.getItem('leng');
+    changeLanguage();
+  } else {
+    leng = 'en';
+  }
+}
+
+window.addEventListener('load', getLocalStorage);
